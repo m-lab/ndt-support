@@ -1,0 +1,3 @@
+[submodule "package"]
+	path = package
+	url = https://github.com/m-lab-tools/package

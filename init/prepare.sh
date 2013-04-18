@@ -8,7 +8,7 @@ if [ -z "$SOURCE_DIR" ] ; then
     exit 1
 fi
 if [ -z "$BUILD_DIR" ] ; then
-    echo "Expected BIULD_DIR in environment"
+    echo "Expected BUILD_DIR in environment"
     exit 1
 fi
 
