@@ -12,7 +12,7 @@ export LD_LIBRARY_PATH=/home/iupui_ndt/build/lib:$LD_LIBRARY_PATH
 
 # NOTE: explicityly disabled "--adminview" to avoid calculation error bug:
 # https://code.google.com/p/ndt/issues/detail?id=79
-WEB100SRV_OPTIONS="--log_dir $SLICERSYNCDIR --snaplog --tcpdump --cputime --multiple --max_clients=40"
+WEB100SRV_OPTIONS="--log_dir $SLICERSYNCDIR/ --snaplog --tcpdump --cputime --multiple --max_clients=40"
 FAKEWWW_OPTIONS=""
 
 if ! pgrep -f ndtd &> /dev/null ; then
