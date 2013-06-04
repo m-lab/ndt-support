@@ -22,17 +22,17 @@ yum install -y libpcap libpcap-devel eclipse-ecj libgcj \
                libgcj-devel java-1.5.0-gcj java-1.5.0-gcj-devel
 
 # build I2util library for NDT
-pushd $SOURCE_DIR/I2util/
-    ./bootstrap.sh 
-    ./configure --prefix=$BUILD_DIR/build
-    make
-    make install
-popd 
+#pushd $SOURCE_DIR/I2util/
+#    ./bootstrap.sh 
+#    ./configure --prefix=$BUILD_DIR/build
+#    make
+#    make install
+#popd 
 
 # TODO: replace with web100 in git
-rm -rf web100_userland-1.8*
-wget http://www.web100.org/download/userland/version1.8/web100_userland-1.8.tar.gz
-tar -C $SOURCE_DIR -zxvf web100_userland-1.8.tar.gz 
+#rm -rf web100_userland-1.8*
+#wget http://www.web100.org/download/userland/version1.8/web100_userland-1.8.tar.gz
+#tar -C $SOURCE_DIR -zxvf web100_userland-1.8.tar.gz 
 pushd $SOURCE_DIR/web100_userland-1.8
     ./configure --prefix=$BUILD_DIR/build  --disable-gtk2 --disable-gtktest
     make
@@ -40,8 +40,8 @@ pushd $SOURCE_DIR/web100_userland-1.8
 popd
 
 # build NDT
-pushd $SOURCE_DIR/ndt
-    ./bootstrap 
+pushd $SOURCE_DIR/ndt-3.6.5.1
+#    ./bootstrap 
     export CPPFLAGS="-I$BUILD_DIR/build/include -I$BUILD_DIR/build/include/web100"
     export LDFLAGS="-L$BUILD_DIR/build/lib"
     ./configure --prefix=$BUILD_DIR/build --with-I2util=$BUILD_DIR/build/.
