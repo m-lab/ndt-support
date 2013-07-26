@@ -1,6 +1,6 @@
 2013-07-26   Stephen Soltesz <soltesz@opentechinstitute.org>
 
-  * 3.6.4-23.mlab - still received reports of bad behavior from Windows clients
+  * 3.6.4-24.mlab - still received reports of bad behavior from Windows clients
                     with 3.6.5.1, so reverting to original version.
 
 2013-06-04   Stephen Soltesz <soltesz@opentechinstitute.org>
