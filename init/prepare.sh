@@ -21,6 +21,13 @@ yum groupinstall -y 'Development Tools'
 yum install -y libpcap libpcap-devel eclipse-ecj libgcj \
                libgcj-devel java-1.5.0-gcj java-1.5.0-gcj-devel
 
+pushd $SOURCE_DIR/I2util/
+    ./bootstrap.sh 
+    ./configure --prefix=$BUILD_DIR/build
+    make
+    make install
+popd 
+
 # NOTE: unpacked from tar-archives by bootstrap.sh
 pushd $SOURCE_DIR/web100_userland-1.8
     ./configure --prefix=$BUILD_DIR/build  --disable-gtk2 --disable-gtktest
@@ -32,7 +39,8 @@ popd
 pushd $SOURCE_DIR/ndt-3.6.4
     export CPPFLAGS="-I$BUILD_DIR/build/include -I$BUILD_DIR/build/include/web100"
     export LDFLAGS="-L$BUILD_DIR/build/lib"
-    ./configure --prefix=$BUILD_DIR/build 
+    ./bootstrap
+    ./configure --prefix=$BUILD_DIR/build --with-I2util=$BUILD_DIR/build/.
     make || :  # this will break b/c the java Applet and janalyze need special treatment..
     pushd Applet
         javac -source 1.4 *.java 
