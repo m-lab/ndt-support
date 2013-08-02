@@ -21,12 +21,12 @@ yum groupinstall -y 'Development Tools'
 yum install -y libpcap libpcap-devel eclipse-ecj libgcj \
                libgcj-devel java-1.5.0-gcj java-1.5.0-gcj-devel
 
-pushd $SOURCE_DIR/I2util/
-    ./bootstrap.sh 
-    ./configure --prefix=$BUILD_DIR/build
-    make
-    make install
-popd 
+pushd $SOURCE_DIR/I2util/
+    ./bootstrap.sh
+    ./configure --prefix=$BUILD_DIR/build
+    make
+    make install
+popd
 
 # NOTE: unpacked from tar-archives by bootstrap.sh
 pushd $SOURCE_DIR/web100_userland-1.8
