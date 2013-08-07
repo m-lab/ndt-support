@@ -18,7 +18,7 @@ fi
 
 # SETUP development environment
 yum groupinstall -y 'Development Tools'
-yum install -y libpcap libpcap-devel \ 
+yum install -y libpcap libpcap-devel \
                java-1.7-openjdk java-1.7.0-openjdk-devel
 
 pushd $SOURCE_DIR/I2util/
