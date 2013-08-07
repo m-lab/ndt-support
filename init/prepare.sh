@@ -47,11 +47,13 @@ pushd $SOURCE_DIR/ndt-3.6.4
         javac -source 1.4 *.java 
     popd
     # NOTE: call helper script for signing jar
-    $SOURCE_DIR/init/signedpackage.sh $PWD/Applet/Tcpbw100.jar
     pushd janalyze
         make JAVACFLAGS="-source 1.5"
     popd
     make install   # should not break now b/c of the earlier steps 
+
+    # Applet gets remade if we do this before 'make install'
+    $SOURCE_DIR/init/signedpackage.sh $BUILD_DIR/build/ndt/Tcpbw100.jar
 popd
 
 cp -r $SOURCE_DIR/init           $BUILD_DIR/
