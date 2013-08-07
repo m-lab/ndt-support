@@ -59,7 +59,7 @@ if test -f $DEST ; then
         # probably ok
         echo "OK: we think this jar is signed: $output"
         echo "NOTICE: overwriting $ORIG with the signed version at $DEST"
-        cp -f $DEST $ORIG
+        mv -f $DEST $ORIG
         exit 0
     else
         # error
