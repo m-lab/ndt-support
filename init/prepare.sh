@@ -18,8 +18,8 @@ fi
 
 # SETUP development environment
 yum groupinstall -y 'Development Tools'
-yum install -y libpcap libpcap-devel eclipse-ecj libgcj \
-               libgcj-devel java-1.5.0-gcj java-1.5.0-gcj-devel
+yum install -y libpcap libpcap-devel \ 
+               java-1.7-openjdk java-1.7.0-openjdk-devel
 
 pushd $SOURCE_DIR/I2util/
     ./bootstrap.sh
@@ -46,6 +46,8 @@ pushd $SOURCE_DIR/ndt-3.6.4
     pushd Applet
         javac -source 1.4 *.java 
     popd
+    # NOTE: call helper script for signing jar
+    $SOURCE_DIR/init/signedpackage.sh $PWD/Applet/Tcpbw100.jar
     pushd janalyze
         make JAVACFLAGS="-source 1.5"
     popd
