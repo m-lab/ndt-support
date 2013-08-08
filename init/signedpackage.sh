@@ -33,9 +33,47 @@
 ORIG=$1
 DEST=/tmp/$( basename $ORIG ) 
 
+
+function prep_jar_as_trusted () {
+    # TODO: *surely* there is a more automated way to do this?
+    local jarfile=$1
+    local tempdir=$( mktemp -d )
+
+    if ! test -r $jarfile ; then
+        echo "Error: could not read $jarfile"
+        echo "Is is present and readable?"
+        return 1
+    fi
+
+    # NOTE: move to tempdir, extract jar, modify manifest, and recreate
+    pushd $tempdir
+        # Extract contents of jar into tempdir;
+        if ! jar -xvf $jarfile ; then
+            echo "Error: failed to extract $jarfile to $tempdir"
+            return 1
+        fi
+
+        # Update manifest header to include "Trusted-Library: true"
+        # NOTE: this prevents warnings from JRE related to the applet 
+        #       containing "trusted" and "untrusted" components.
+        # sed: read this as: append "Trusted-Library: true" after line '1'
+        sed -e '1 aTrusted-Library: true\r' -i META-INF/MANIFEST.MF 
+
+        # Recreate jar with new manifest: NOTE: overwrite original 'jarfile'.
+        if ! jar -cvmf META-INF/MANIFEST.MF $jarfile * ; then
+            echo "Error: failed to recreate $jarfile from $tempdir/*"
+            return 1
+        fi
+    popd
+
+    # NOTE: now the jar is ready to be signed.
+    return 0
+}
+
+
 function usage () {
     cat <<EOF
-    You can do this with a command like:
+    You can sign the jar file with a command like:
 
         # jarsigner -keystore mlab-java-signing-keystore $DEST mlab
 
@@ -52,28 +90,7 @@ EOF
 # NOTE: jarsigner always returns 0, so we have to parse output.
 # 
 
-if test -f $DEST ; then
-    # file already exits, so verify that it is now signed.
-    output=$( jarsigner -certs -verify $DEST )
-    if [[ "jar verified." =~ $output ]] ; then
-        # probably ok
-        echo "OK: we think this jar is signed: $output"
-        echo "NOTICE: overwriting $ORIG with the signed version at $DEST"
-        mv -f $DEST $ORIG
-        exit 0
-    else
-        # error
-        LOG=/tmp/unsigned_jar.log
-        jarsigner -certs -verbose -verify $DEST &> $LOG
-        cat <<EOF
-NOTICE:
-    We found $DEST, but it looks unsigned or the signature is bad.
-    A more detailed log message is here: $LOG
-EOF
-        usage
-        exit 1
-    fi
-else
+if ! test -f $DEST ; then
     cat <<EOF
 NOTICE:
     We did not find a jar at '$DEST'.  If this is the first time you're running
@@ -83,5 +100,28 @@ NOTICE:
 EOF
     usage
     cp -f $ORIG $DEST
-    exit 1  # only return 0 when jar was signed
+    prep_jar_as_trusted $DEST
+    exit 1  # only return 0 to confirm that jar was signed
+fi
+
+# NOTE: previous condition would exit:
+# NOTE: So here $DEST exits. so, verify that it is now signed.
+output=$( jarsigner -certs -verify $DEST )
+if [[ "jar verified." =~ $output ]] ; then
+    # probably ok
+    echo "OK: we think this jar is signed: $output"
+    echo "NOTICE: overwriting $ORIG with the signed version at $DEST"
+    mv -f $DEST $ORIG
+    exit 0
+else
+    # error
+    LOG=/tmp/unsigned_jar.log
+    jarsigner -certs -verbose -verify $DEST &> $LOG
+    cat <<EOF
+NOTICE:
+    We found $DEST, but it looks unsigned or the signature is bad.
+    A more detailed log message is here: $LOG
+EOF
+    usage
+    exit 1
 fi
