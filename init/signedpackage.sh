@@ -42,6 +42,7 @@ function prep_jar_as_trusted () {
     if ! test -r $jarfile ; then
         echo "Error: could not read $jarfile"
         echo "Is is present and readable?"
+        rm -rf $tempdir
         return 1
     fi
 
@@ -50,6 +51,7 @@ function prep_jar_as_trusted () {
         # Extract contents of jar into tempdir;
         if ! jar -xvf $jarfile ; then
             echo "Error: failed to extract $jarfile to $tempdir"
+            rm -rf $tempdir
             return 1
         fi
 
@@ -62,10 +64,12 @@ function prep_jar_as_trusted () {
         # Recreate jar with new manifest: NOTE: overwrite original 'jarfile'.
         if ! jar -cvmf META-INF/MANIFEST.MF $jarfile * ; then
             echo "Error: failed to recreate $jarfile from $tempdir/*"
+            rm -rf $tempdir
             return 1
         fi
     popd
 
+    rm -rf $tempdir
     # NOTE: now the jar is ready to be signed.
     return 0
 }
