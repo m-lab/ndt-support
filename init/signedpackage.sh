@@ -91,6 +91,11 @@ EOF
 # 
 
 if ! test -f $DEST ; then
+    cp -f $ORIG $DEST
+    if ! prep_jar_as_trusted $DEST ; then
+        echo "Error: failed to prepare $DEST manifest file."
+        exit 1
+    fi
     cat <<EOF
 NOTICE:
     We did not find a jar at '$DEST'.  If this is the first time you're running
@@ -99,8 +104,6 @@ NOTICE:
     We are copying a new, UNSIGNED jar there for you to SIGN.
 EOF
     usage
-    cp -f $ORIG $DEST
-    prep_jar_as_trusted $DEST
     exit 1  # only return 0 to confirm that jar was signed
 fi
 
