@@ -90,10 +90,6 @@ function usage () {
 EOF
 }
 
-# 
-# NOTE: jarsigner always returns 0, so we have to parse output.
-# 
-
 if ! test -f $DEST ; then
     cp -f $ORIG $DEST
     if ! prep_jar_as_trusted $DEST ; then
@@ -111,8 +107,11 @@ EOF
     exit 1  # only return 0 to confirm that jar was signed
 fi
 
+#
+# NOTE: jarsigner always returns 0, so we have to parse output.
 # NOTE: previous condition would exit:
 # NOTE: So here $DEST exits. so, verify that it is now signed.
+#
 output=$( jarsigner -certs -verify $DEST )
 if [[ "jar verified." =~ $output ]] ; then
     # probably ok
