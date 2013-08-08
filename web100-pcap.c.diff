@@ -1,0 +1,26 @@
+--- src/web100-pcap.c.orig	2013-08-06 16:21:28.000000000 +0000
++++ src/web100-pcap.c	2013-08-06 16:24:44.000000000 +0000
+@@ -819,8 +819,21 @@
+ 
+   log_println(2, "pcap_open_live() returned pointer 0x%x", (int) pd);
+ 
+-  memset(namebuf, 0, 200);
+-  I2AddrNodeName(sockAddr, namebuf, &nameBufLen);
++  switch(sock_addr->sa_family) {
++      case AF_INET:
++          inet_ntop(AF_INET, &(((struct sockaddr_in *)sock_addr)->sin_addr),
++                  namebuf, nameBufLen);
++          break;
++
++      case AF_INET6:
++          inet_ntop(AF_INET6, &(((struct sockaddr_in6 *)sock_addr)->sin6_addr),
++                  namebuf, nameBufLen);
++          break;
++
++      default:
++          I2AddrNodeName(sockAddr, namebuf, &nameBufLen);
++  }
++
+   memset(cmdbuf, 0, 256);
+   sprintf(cmdbuf, "host %s and port %d", namebuf, I2AddrPort(sockAddr));
+ 
