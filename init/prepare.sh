@@ -54,7 +54,7 @@ pushd $SOURCE_DIR/ndt-3.6.4
 
     # Applet gets remade if we do this before 'make install'
     # NOTE: skip for now
-    # $SOURCE_DIR/init/signedpackage.sh $BUILD_DIR/build/ndt/Tcpbw100.jar
+    $SOURCE_DIR/init/signedpackage.sh $BUILD_DIR/build/ndt/Tcpbw100.jar
 popd
 
 cp -r $SOURCE_DIR/init           $BUILD_DIR/
