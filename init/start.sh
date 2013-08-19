@@ -23,10 +23,16 @@ if ! pgrep -f ndtd &> /dev/null ; then
     # ndtd must run as root
     $path/ndtd $WEB100SRV_OPTIONS > /dev/null 2>&1 &
     touch /var/lock/subsys/ndtd
-fi   
+fi
 
 if ! pgrep -f fakewww &> /dev/null ; then
     echo "Starting fakewww:"
     $path/fakewww $FAKEWWW_OPTIONS > /dev/null 2>&1 &
     touch /var/lock/subsys/fakewww
+fi
+
+if ! pgrep -f flashpolicyd.py &> /dev/null ; then
+    echo "Starting flashpolicyd.py:"
+    flashpolicyd.py > /dev/null 2>&1 &
+    touch /var/lock/subsys/flashpolicyd.py
 fi
