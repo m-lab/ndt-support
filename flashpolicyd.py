@@ -18,6 +18,8 @@ import exceptions
 import contextlib
 
 VERSION = 0.1
+PORT = 843  # Listen on PORT.
+FILE = '/home/iupui_ndt/flashpolicy.xml'  # Full path to server policy file.
 
 class policy_server(object):
     def __init__(self, port, path):
@@ -74,20 +76,8 @@ class policy_server(object):
         print >>sys.stderr, str
 
 def main():
-    parser = optparse.OptionParser(usage = '%prog [--port=PORT] --file=FILE',
-                                   version='%prog ' + str(VERSION))
-    parser.add_option('-p', '--port', dest='port', type=int, default=843,
-                      help='listen on port PORT', metavar='PORT')
-    parser.add_option('-f', '--file', dest='path',
-                      help='server policy file FILE', metavar='FILE')
-    opts, args = parser.parse_args()
-    if args:
-        parser.error('No arguments are needed. See help.')
-    if not opts.path:
-        parser.error('File must be specified. See help.')
-
     try:
-        policy_server(opts.port, opts.path).run()
+        policy_server(PORT, FILE).run()
     except Exception, e:
         print >> sys.stderr, e
         sys.exit(1)
@@ -95,4 +85,4 @@ def main():
         pass
 
 if __name__ == '__main__':
-    main()
+      main()
