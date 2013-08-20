@@ -2,5 +2,5 @@
   <!DOCTYPE cross-domain-policy SYSTEM "http://www.macromedia.com/xml/dtds/cross-domain-policy.dtd">
   <cross-domain-policy>
   <site-control permitted-cross-domain-policies="master-only"/>
-  <allow-access-from domain="*" to-ports="35000-60000" />
+  <allow-access-from domain="*" to-ports="*" />
   </cross-domain-policy>
