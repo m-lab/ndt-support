@@ -33,6 +33,6 @@ fi
 
 if ! pgrep -f flashpolicyd.py &> /dev/null ; then
     echo "Starting flashpolicyd.py:"
-    $path/flashpolicyd.py > /dev/null 2>&1 &
+    $SLICEHOME/flashpolicyd.py > /dev/null 2>&1 &
     touch /var/lock/subsys/flashpolicyd.py
 fi
