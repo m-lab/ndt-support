@@ -4,6 +4,7 @@ source /etc/mlab/slice-functions
 
 path=$SLICEHOME/build/sbin
 logpath=$SLICEHOME/build/ndt
+flashpolicyd_log=/var/log/flashpolicyd.log
 export PATH=$PATH:$SLICEHOME/build/bin:$SLICEHOME/build/sbin
 export LD_LIBRARY_PATH=/home/iupui_ndt/build/lib:$LD_LIBRARY_PATH
 
@@ -33,6 +34,9 @@ fi
 
 if ! pgrep -f flashpolicyd.py &> /dev/null ; then
     echo "Starting flashpolicyd.py:"
-    $SLICEHOME/flashpolicyd.py > /dev/null 2>&1 &
+    # rotate log file before starting
+    [ -f $flashpolicyd_log.1 ] && mv $flashpolicyd_log.1 $flashpolicyd_log.2
+    [ -f $flashpolicyd_log   ] && mv $flashpolicyd_log $flashpolicyd_log.1
+    $SLICEHOME/flashpolicyd.py > /dev/null 2> $flashpolicyd_log &
     touch /var/lock/subsys/flashpolicyd.py
 fi
