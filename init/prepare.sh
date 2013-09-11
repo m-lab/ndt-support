@@ -40,6 +40,7 @@ pushd $SOURCE_DIR/ndt-3.6.5.2
     export CPPFLAGS="-I$BUILD_DIR/build/include -I$BUILD_DIR/build/include/web100"
     export LDFLAGS="-L$BUILD_DIR/build/lib"
     #patch -p0 < $SOURCE_DIR/web100-pcap.c.diff 
+    patch -p0 < $SOURCE_DIR/web100-util.c.diff 
     #./bootstrap
     ./configure --prefix=$BUILD_DIR/build --with-I2util=$BUILD_DIR/build/.
     make || :  # this will break b/c the java Applet and janalyze need special treatment..
