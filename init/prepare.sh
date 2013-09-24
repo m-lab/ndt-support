@@ -43,13 +43,13 @@ pushd $SOURCE_DIR/ndt-3.6.5.2
     #patch -p0 < $SOURCE_DIR/web100-util.c.diff 
     #./bootstrap
     ./configure --prefix=$BUILD_DIR/build #--with-I2util=$BUILD_DIR/build/.
-    make || :  # this will break b/c the java Applet and janalyze need special treatment..
-    pushd Applet
-        javac -source 1.4 *.java 
-    popd
-    pushd janalyze
-        make JAVACFLAGS="-source 1.5"
-    popd
+    make # || :  # this will break b/c the java Applet and janalyze need special treatment..
+    # pushd Applet
+    #     javac -source 1.4 *.java 
+    # popd
+    # pushd janalyze
+    #     make JAVACFLAGS="-source 1.5"
+    # popd
     make install   # should not break now b/c of the earlier steps 
 
     # Applet gets remade if we do this before 'make install'
