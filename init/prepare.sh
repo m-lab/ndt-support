@@ -40,7 +40,6 @@ popd
 pushd $SOURCE_DIR/ndt-3.6.5.2
     export CPPFLAGS="-I$BUILD_DIR/build/include -I$BUILD_DIR/build/include/web100"
     export LDFLAGS="-L$BUILD_DIR/build/lib"
-    #patch -p0 < $SOURCE_DIR/web100-pcap.c.diff 
     ./configure --prefix=$BUILD_DIR/build
     make
     make install
