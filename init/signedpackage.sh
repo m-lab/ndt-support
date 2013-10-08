@@ -93,6 +93,7 @@ function usage () {
 EOF
 }
 
+set
 if test -n "$DISABLE_APPLET_SIGNING" ; then
     echo "WARNING: Skipping applet signing"
     echo "Found that DISABLE_APPLET_SIGNING was set."
