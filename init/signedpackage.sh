@@ -87,8 +87,18 @@ function usage () {
     
     Replace $DEST with the signed version and rerun the build scripts.
     This script will automatically detect the signed version and use it.
+
+    NOTE: TO SKIP APPLET SIGNING - export the environment variable:
+        DISABLE_APPLET_SIGNING=1
 EOF
 }
+
+if test -n "$DISABLE_APPLET_SIGNING" ; then
+    echo "WARNING: Skipping applet signing"
+    echo "Found that DISABLE_APPLET_SIGNING was set."
+    echo "Unset DISABLE_APPLET_SIGNING to enforce signing again."
+    exit 0
+fi
 
 if ! test -f $DEST ; then
     cp -f $ORIG $DEST
