@@ -19,7 +19,8 @@ fi
 # SETUP development environment
 yum groupinstall -y 'Development Tools'
 yum install -y libpcap libpcap-devel \
-               java-1.7-openjdk java-1.7.0-openjdk-devel
+               java-1.7-openjdk java-1.7.0-openjdk-devel \
+               zlib-devel zlib
 
 # NOTE: only needed when building ndt from svn-source
 #pushd $SOURCE_DIR/I2util/
