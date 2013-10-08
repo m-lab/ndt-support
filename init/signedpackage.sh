@@ -89,11 +89,14 @@ function usage () {
     This script will automatically detect the signed version and use it.
 
     NOTE: TO SKIP APPLET SIGNING - export the environment variable:
-        DISABLE_APPLET_SIGNING=1
+        export DISABLE_APPLET_SIGNING=1
+
+    If you are using 'sudo' be sure to include the variable in the sudo env.
+    i.e.
+        sudo DISABLE_APPLET_SIGNING=1 ./build.sh <slicename>
 EOF
 }
 
-set
 if test -n "$DISABLE_APPLET_SIGNING" ; then
     echo "WARNING: Skipping applet signing"
     echo "Found that DISABLE_APPLET_SIGNING was set."
