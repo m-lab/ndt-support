@@ -51,8 +51,11 @@ pushd $SOURCE_DIR/ndt-3.6.5.2
     $SOURCE_DIR/init/signedpackage.sh $BUILD_DIR/build/ndt/Tcpbw100.jar
 popd
 
-cp -r $SOURCE_DIR/init           $BUILD_DIR/
-cp    $SOURCE_DIR/tcpbw100.html  $BUILD_DIR/
+cp -r $SOURCE_DIR/init             $BUILD_DIR/
+cp    $SOURCE_DIR/tcpbw100.html    $BUILD_DIR/
+cp    $SOURCE_DIR/flashpolicy.xml  $BUILD_DIR/
+install -m 0755 $SOURCE_DIR/flashpolicyd.py  $BUILD_DIR/
+
 # NOTE: admin.html is automatically generated and should not be included.
 rm -f $BUILD_DIR/build/ndt/admin.html
 
