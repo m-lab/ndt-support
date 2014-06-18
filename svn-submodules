@@ -1,0 +1,9 @@
+# From m-lab-tools/package/bootstrap.sh:
+## svn does not have submodule functionality, so use list of tags
+#if test -f svn-submodules ; then
+#    cat svn-submodules | while read rev repo dir ; do
+#        echo "Checking out revision:$rev from $repo"
+#        svn checkout -r $rev $repo $dir
+#    done
+#fi
+1093 http://ndt.googlecode.com/svn/trunk/ ndt-read-only
