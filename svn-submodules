@@ -7,3 +7,6 @@
 #        svn checkout -r $rev $repo $dir
 #    done
 #fi
+#
+## Non-members may check out a read-only working copy anonymously over HTTP.
+#svn checkout http://ndt.googlecode.com/svn/trunk/ ndt-read-only 
