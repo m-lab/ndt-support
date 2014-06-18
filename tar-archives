@@ -1,2 +1,4 @@
-web100_userland-1.8.tar.gz http://www.web100.org/download/userland/version1.8/web100_userland-1.8.tar.gz
-ndt-3.6.5.2.tar.gz http://software.internet2.edu/sources/ndt/ndt-3.6.5.2.tar.gz
+# Commenting out these entries so m-lab-tools/package/bootstrap.sh will pull its download instructions 
+# from svn-modules instead of tar-archive, for a time-sensitive release. -sca 6/18/2014
+# web100_userland-1.8.tar.gz http://www.web100.org/download/userland/version1.8/web100_userland-1.8.tar.gz
+# ndt-3.6.5.2.tar.gz http://software.internet2.edu/sources/ndt/ndt-3.6.5.2.tar.gz
