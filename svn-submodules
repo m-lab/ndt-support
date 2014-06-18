@@ -1,5 +1,4 @@
-# Copying from package/bootstrap.sh to get the syntax right
-
+# From m-lab-tools/package/bootstrap.sh:
 ## svn does not have submodule functionality, so use list of tags
 #if test -f svn-submodules ; then
 #    cat svn-submodules | while read rev repo dir ; do
@@ -7,6 +6,4 @@
 #        svn checkout -r $rev $repo $dir
 #    done
 #fi
-#
-## Non-members may check out a read-only working copy anonymously over HTTP.
-#svn checkout http://ndt.googlecode.com/svn/trunk/ ndt-read-only 
+1093 http://ndt.googlcode.com/svn/trunk/ ndt-read-only
