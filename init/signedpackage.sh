@@ -37,39 +37,13 @@ DEST=/tmp/$( basename $ORIG )
 function prep_jar_as_trusted () {
     # TODO: *surely* there is a more automated way to do this?
     local jarfile=$1
-    local tempdir=$( mktemp -d )
 
     if ! test -r $jarfile ; then
         echo "Error: could not read $jarfile"
         echo "Is is present and readable?"
-        rm -rf $tempdir
         return 1
     fi
 
-```    # NOTE: move to tempdir, extract jar, modify manifest, and recreate
-    pushd $tempdir
-        # Extract contents of jar into tempdir;
-        if ! jar -xvf $jarfile ; then
-            echo "Error: failed to extract $jarfile to $tempdir"
-            rm -rf $tempdir
-            return 1
-        fi
-
-        # Update manifest header to include "Trusted-Library: true"
-        # NOTE: this prevents warnings from JRE related to the applet 
-        #       containing "trusted" and "untrusted" components.
-        # sed: read this as: append "Trusted-Library: true" after line '1'
-        sed -e '1 aTrusted-Library: true\r' -i META-INF/MANIFEST.MF 
-
-        # Recreate jar with new manifest: NOTE: overwrite original 'jarfile'.
-        if ! jar -cvmf META-INF/MANIFEST.MF $jarfile * ; then
-            echo "Error: failed to recreate $jarfile from $tempdir/*"
-            rm -rf $tempdir
-            return 1
-        fi
-    popd
-```
-    rm -rf $tempdir
     # NOTE: now the jar is ready to be signed.
     return 0
 }
