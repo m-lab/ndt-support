@@ -33,22 +33,6 @@
 ORIG=$1
 DEST=/tmp/$( basename $ORIG ) 
 
-
-function prep_jar_as_trusted () {
-    # TODO: *surely* there is a more automated way to do this?
-    local jarfile=$1
-
-    if ! test -r $jarfile ; then
-        echo "Error: could not read $jarfile"
-        echo "Is is present and readable?"
-        return 1
-    fi
-
-    # NOTE: now the jar is ready to be signed.
-    return 0
-}
-
-
 function usage () {
     cat <<EOF
     You can sign the jar file with a command like:
@@ -80,10 +64,13 @@ fi
 
 if ! test -f $DEST ; then
     cp -f $ORIG $DEST
-    if ! prep_jar_as_trusted $DEST ; then
-        echo "Error: failed to prepare $DEST manifest file."
-        exit 1
+    if ! test -r $DEST ; then
+        echo "Error: could not read $DEST"
+        echo "Is is present and readable?"
+        return 1
     fi
+    # NOTE: now the jar is ready to be signed.
+
     cat <<EOF
 NOTICE:
     We did not find a jar at '$DEST'.  If this is the first time you're running
