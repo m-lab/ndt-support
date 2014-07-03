@@ -46,7 +46,7 @@ function prep_jar_as_trusted () {
         return 1
     fi
 
-    # NOTE: move to tempdir, extract jar, modify manifest, and recreate
+```    # NOTE: move to tempdir, extract jar, modify manifest, and recreate
     pushd $tempdir
         # Extract contents of jar into tempdir;
         if ! jar -xvf $jarfile ; then
@@ -68,7 +68,7 @@ function prep_jar_as_trusted () {
             return 1
         fi
     popd
-
+```
     rm -rf $tempdir
     # NOTE: now the jar is ready to be signed.
     return 0
@@ -127,7 +127,7 @@ fi
 # NOTE: So here $DEST exits. so, verify that it is now signed.
 #
 output=$( jarsigner -certs -verify $DEST )
-if [[ "jar verified." =~ $output ]] ; then
+if [[ $output =~ "jar verified." ]] ; then
     # probably ok
     echo "OK: we think this jar is signed: $output"
     echo "NOTICE: overwriting $ORIG with the signed version at $DEST"
