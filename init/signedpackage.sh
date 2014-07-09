@@ -33,48 +33,6 @@
 ORIG=$1
 DEST=/tmp/$( basename $ORIG ) 
 
-
-function prep_jar_as_trusted () {
-    # TODO: *surely* there is a more automated way to do this?
-    local jarfile=$1
-    local tempdir=$( mktemp -d )
-
-    if ! test -r $jarfile ; then
-        echo "Error: could not read $jarfile"
-        echo "Is is present and readable?"
-        rm -rf $tempdir
-        return 1
-    fi
-
-    # NOTE: move to tempdir, extract jar, modify manifest, and recreate
-    pushd $tempdir
-        # Extract contents of jar into tempdir;
-        if ! jar -xvf $jarfile ; then
-            echo "Error: failed to extract $jarfile to $tempdir"
-            rm -rf $tempdir
-            return 1
-        fi
-
-        # Update manifest header to include "Trusted-Library: true"
-        # NOTE: this prevents warnings from JRE related to the applet 
-        #       containing "trusted" and "untrusted" components.
-        # sed: read this as: append "Trusted-Library: true" after line '1'
-        sed -e '1 aTrusted-Library: true\r' -i META-INF/MANIFEST.MF 
-
-        # Recreate jar with new manifest: NOTE: overwrite original 'jarfile'.
-        if ! jar -cvmf META-INF/MANIFEST.MF $jarfile * ; then
-            echo "Error: failed to recreate $jarfile from $tempdir/*"
-            rm -rf $tempdir
-            return 1
-        fi
-    popd
-
-    rm -rf $tempdir
-    # NOTE: now the jar is ready to be signed.
-    return 0
-}
-
-
 function usage () {
     cat <<EOF
     You can sign the jar file with a command like:
@@ -106,10 +64,13 @@ fi
 
 if ! test -f $DEST ; then
     cp -f $ORIG $DEST
-    if ! prep_jar_as_trusted $DEST ; then
-        echo "Error: failed to prepare $DEST manifest file."
-        exit 1
+    if ! test -r $DEST ; then
+        echo "Error: could not read $DEST"
+        echo "Is is present and readable?"
+        return 1
     fi
+    # NOTE: now the jar is ready to be signed.
+
     cat <<EOF
 NOTICE:
     We did not find a jar at '$DEST'.  If this is the first time you're running
@@ -127,7 +88,7 @@ fi
 # NOTE: So here $DEST exits. so, verify that it is now signed.
 #
 output=$( jarsigner -certs -verify $DEST )
-if [[ "jar verified." =~ $output ]] ; then
+if [[ $output =~ "jar verified." ]] ; then
     # probably ok
     echo "OK: we think this jar is signed: $output"
     echo "NOTICE: overwriting $ORIG with the signed version at $DEST"

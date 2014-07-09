@@ -39,6 +39,7 @@ popd
 
 # NOTE: unpacked from tar-archives by bootstrap.sh
 pushd $SOURCE_DIR/ndt-3.6.5.2
+    echo "Permissions: sandbox" >> $SOURCE_DIR/ndt-3.6.5.2/Applet/MANIFEST.MF
     export CPPFLAGS="-I$BUILD_DIR/build/include -I$BUILD_DIR/build/include/web100"
     export LDFLAGS="-L$BUILD_DIR/build/lib"
     ./configure --prefix=$BUILD_DIR/build
