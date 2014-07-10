@@ -20,15 +20,16 @@ fi
 yum groupinstall -y 'Development Tools'
 yum install -y libpcap libpcap-devel \
                java-1.7-openjdk java-1.7.0-openjdk-devel \
-               zlib-devel zlib
+               zlib-devel zlib \
+               jansson-devel
 
 # NOTE: only needed when building ndt from svn-source
-#pushd $SOURCE_DIR/I2util/
-#    ./bootstrap.sh
-#    ./configure --prefix=$BUILD_DIR/build
-#    make
-#    make install
-#popd
+pushd $SOURCE_DIR/I2util/
+    ./bootstrap.sh
+    ./configure --prefix=$BUILD_DIR/build
+    make
+    make install
+popd
 
 # NOTE: unpacked from tar-archives by bootstrap.sh
 pushd $SOURCE_DIR/web100_userland-1.8
@@ -38,10 +39,12 @@ pushd $SOURCE_DIR/web100_userland-1.8
 popd
 
 # NOTE: unpacked from tar-archives by bootstrap.sh
-pushd $SOURCE_DIR/ndt-3.6.5.2
+pushd $SOURCE_DIR/ndt-read-only
+    mv $SOURCE_DIR/I2util .
     echo "Permissions: sandbox" >> $SOURCE_DIR/ndt-3.6.5.2/Applet/MANIFEST.MF
     export CPPFLAGS="-I$BUILD_DIR/build/include -I$BUILD_DIR/build/include/web100"
     export LDFLAGS="-L$BUILD_DIR/build/lib"
+    ./bootstrap
     ./configure --prefix=$BUILD_DIR/build
     make
     make install
