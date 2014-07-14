@@ -41,7 +41,6 @@ popd
 # NOTE: unpacked from tar-archives by bootstrap.sh
 pushd $SOURCE_DIR/ndt-read-only
     mv $SOURCE_DIR/I2util .
-    echo "Permissions: sandbox" >> $SOURCE_DIR/ndt-read-only/Applet/MANIFEST.MF
     export CPPFLAGS="-I$BUILD_DIR/build/include -I$BUILD_DIR/build/include/web100"
     export LDFLAGS="-L$BUILD_DIR/build/lib"
     ./bootstrap
