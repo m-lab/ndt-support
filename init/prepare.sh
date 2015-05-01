@@ -24,12 +24,12 @@ yum install -y libpcap libpcap-devel \
                jansson-devel
 
 # NOTE: only needed when building ndt from svn-source
-pushd $SOURCE_DIR/I2util/
-    ./bootstrap.sh
-    ./configure --prefix=$BUILD_DIR/build
-    make
-    make install
-popd
+# pushd $SOURCE_DIR/I2util/
+#    ./bootstrap.sh
+#    ./configure --prefix=$BUILD_DIR/build
+#    make
+#    make install
+# popd
 
 # NOTE: unpacked from tar-archives by bootstrap.sh
 pushd $SOURCE_DIR/web100_userland-1.8
@@ -39,25 +39,31 @@ pushd $SOURCE_DIR/web100_userland-1.8
 popd
 
 # NOTE: unpacked from tar-archives by bootstrap.sh
-pushd $SOURCE_DIR/ndt-read-only
-    mv $SOURCE_DIR/I2util .
+pushd $SOURCE_DIR/ndt-3.7.0
     export CPPFLAGS="-I$BUILD_DIR/build/include -I$BUILD_DIR/build/include/web100"
     export LDFLAGS="-L$BUILD_DIR/build/lib"
-    ./bootstrap
-    ./configure --prefix=$BUILD_DIR/build
+    ./configure --enable-fakewww --prefix=$BUILD_DIR/build
     make
     make install
 
     # Applet gets remade if we do this before 'make install'
     # NOTE: call helper script for signing jar
     # NOTE: but, skip for now
-    $SOURCE_DIR/init/signedpackage.sh $BUILD_DIR/build/ndt/Tcpbw100.jar
+    while true; do
+        $SOURCE_DIR/init/signedpackage.sh $BUILD_DIR/build/ndt/Tcpbw100.jar
+        if [[ $? -eq 0 ]]; then
+           break
+        fi
+        echo "Opening a new shell so that you can sign a newly-produced jar, and/or investigate further."
+        echo "When you are done, simply exit the shell, and the package build process will proceed."
+        bash
+    done
 popd
 
 cp -r $SOURCE_DIR/init             $BUILD_DIR/
 cp    $SOURCE_DIR/tcpbw100.html    $BUILD_DIR/
 cp    $SOURCE_DIR/flashpolicy.xml  $BUILD_DIR/
-install -m 0755 $SOURCE_DIR/flashpolicyd.py  $BUILD_DIR/
+# install -m 0755 $SOURCE_DIR/flashpolicyd.py  $BUILD_DIR/
 
 # NOTE: admin.html is automatically generated and should not be included.
 rm -f $BUILD_DIR/build/ndt/admin.html
