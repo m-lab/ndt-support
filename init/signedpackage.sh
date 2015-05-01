@@ -67,7 +67,7 @@ if ! test -f $DEST ; then
     if ! test -r $DEST ; then
         echo "Error: could not read $DEST"
         echo "Is is present and readable?"
-        return 1
+        exit 1
     fi
     # NOTE: now the jar is ready to be signed.
 
