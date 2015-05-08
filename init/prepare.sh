@@ -39,7 +39,7 @@ pushd $SOURCE_DIR/web100_userland-1.8
 popd
 
 # NOTE: unpacked from tar-archives by bootstrap.sh
-pushd $SOURCE_DIR/ndt-3.7.0
+pushd $SOURCE_DIR/ndt-3.7.0.1
     export CPPFLAGS="-I$BUILD_DIR/build/include -I$BUILD_DIR/build/include/web100"
     export LDFLAGS="-L$BUILD_DIR/build/lib"
     ./configure --enable-fakewww --prefix=$BUILD_DIR/build
