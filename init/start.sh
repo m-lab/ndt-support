@@ -14,6 +14,7 @@ export LD_LIBRARY_PATH=/home/iupui_ndt/build/lib:$LD_LIBRARY_PATH
 # Paths to private key and certificate for SSL operation
 PRIVATE_KEY=/etc/pki/tls/private/measurement-lab.org.key
 SSL_CERT=/etc/pki/tls/certs/measurement-lab.org.crt
+TLS_PORT=5001
 
 # NOTE: explicityly disabled "--adminview" to avoid calculation error bug:
 # https://code.google.com/p/ndt/issues/detail?id=79
@@ -22,7 +23,7 @@ FAKEWWW_OPTIONS=""
 
 # Set SSL flags if private key and certificate exist
 if [ -f $PRIVATE_KEY ] && [ -f $SSL_CERT ]; then
-	SSL_OPTIONS="--tls --private_key $PRIVATE_KEY --certificate $SSL_CERT"
+	SSL_OPTIONS="--tls --tls_port $TLS_PORT --private_key $PRIVATE_KEY --certificate $SSL_CERT"
 	WEB100SRV_OPTIONS="${WEB100SRV_OPTIONS} $SSL_OPTIONS"
 fi
 
