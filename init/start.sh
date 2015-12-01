@@ -11,10 +11,20 @@ export LD_LIBRARY_PATH=/home/iupui_ndt/build/lib:$LD_LIBRARY_PATH
 [ -f $path/ndtd ] || exit 0
 [ -f $path/fakewww ] || exit 0
 
+# Paths to private key and certificate for SSL operation
+PRIVATE_KEY=/etc/pki/tls/private/measurement-lab.org.key
+SSL_CERT=/etc/pki/tls/certs/measurement-lab.org.crt
+
 # NOTE: explicityly disabled "--adminview" to avoid calculation error bug:
 # https://code.google.com/p/ndt/issues/detail?id=79
 WEB100SRV_OPTIONS="--log_dir $SLICERSYNCDIR/ --snaplog --tcpdump --cputime --multiple --max_clients=40"
 FAKEWWW_OPTIONS=""
+
+# Set SSL flags if private key and certificate exist
+if [ -f $PRIVATE_KEY ] && [ -f $SSL_CERT ]; then
+	SSL_OPTIONS="--tls --private_key $PRIVATE_KEY --certificate $SSL_CERT"
+	WEB100SRV_OPTIONS="${WEB100SRV_OPTIONS} $SSL_OPTIONS"
+fi
 
 if ! pgrep -f ndtd &> /dev/null ; then
     echo "Starting ndtd:"
