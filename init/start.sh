@@ -14,7 +14,7 @@ export LD_LIBRARY_PATH=/home/iupui_ndt/build/lib:$LD_LIBRARY_PATH
 # Paths to private key and certificate for SSL operation
 PRIVATE_KEY=/etc/pki/tls/private/measurement-lab.org.key
 SSL_CERT=/etc/pki/tls/certs/measurement-lab.org.crt
-TLS_PORT=5001
+TLS_PORT=3010
 
 # NOTE: explicityly disabled "--adminview" to avoid calculation error bug:
 # https://code.google.com/p/ndt/issues/detail?id=79
