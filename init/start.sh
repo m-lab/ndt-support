@@ -16,9 +16,12 @@ PRIVATE_KEY=/etc/pki/tls/private/measurement-lab.org.key
 SSL_CERT=/etc/pki/tls/certs/measurement-lab.org.crt
 TLS_PORT=3010
 
+# Location of web100 variables file
+WEB100_VARS=$SLICEHOME/build/ndt/web100_variables 
+
 # NOTE: explicityly disabled "--adminview" to avoid calculation error bug:
 # https://code.google.com/p/ndt/issues/detail?id=79
-WEB100SRV_OPTIONS="--log_dir $SLICERSYNCDIR/ --snaplog --tcpdump --cputime --multiple --max_clients=40"
+WEB100SRV_OPTIONS="--log_dir $SLICERSYNCDIR/ --snaplog --tcpdump --cputime --multiple --max_clients=40 -f $WEB100_VARS"
 FAKEWWW_OPTIONS=""
 
 # Set SSL flags if private key and certificate exist
