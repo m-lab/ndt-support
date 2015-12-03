@@ -26,7 +26,7 @@ FAKEWWW_OPTIONS=""
 
 # Set SSL flags if private key and certificate exist
 if [ -f $PRIVATE_KEY ] && [ -f $SSL_CERT ]; then
-	SSL_OPTIONS="--tls --tls_port $TLS_PORT --private_key $PRIVATE_KEY --certificate $SSL_CERT"
+	SSL_OPTIONS="--tls_port $TLS_PORT --private_key $PRIVATE_KEY --certificate $SSL_CERT"
 	WEB100SRV_OPTIONS="${WEB100SRV_OPTIONS} $SSL_OPTIONS"
 fi
 
