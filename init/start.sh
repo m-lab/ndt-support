@@ -21,7 +21,9 @@ WEB100_VARS=$SLICEHOME/build/ndt/web100_variables
 
 # NOTE: explicityly disabled "--adminview" to avoid calculation error bug:
 # https://code.google.com/p/ndt/issues/detail?id=79
-WEB100SRV_OPTIONS="--log_dir $SLICERSYNCDIR/ --snaplog --tcpdump --cputime --multiple --max_clients=40 --disable_extended_tests -f $WEB100_VARS"
+WEB100SRV_OPTIONS="--log_dir $SLICERSYNCDIR/ --snaplog --tcpdump --cputime
+                   --multiple --max_clients=40 --disable_extended_tests
+                   -f $WEB100_VARS"
 FAKEWWW_OPTIONS=""
 
 # Set SSL flags if private key and certificate exist
