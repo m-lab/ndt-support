@@ -38,13 +38,13 @@ if ! pgrep -f ndtd &> /dev/null ; then
     [ -f $logpath/web100srv.log.1 ] && mv $logpath/web100srv.log.1 $logpath/web100srv.log.2
     [ -f $logpath/web100srv.log   ] && mv $logpath/web100srv.log $logpath/web100srv.log.1 
     # ndtd must run as root
-    $path/ndtd $WEB100SRV_OPTIONS > /dev/null 2>&1 &
+    nohup $path/ndtd $WEB100SRV_OPTIONS > /dev/null 2>&1 &
     touch /var/lock/subsys/ndtd
 fi
 
 if ! pgrep -f fakewww &> /dev/null ; then
     echo "Starting fakewww:"
-    $path/fakewww $FAKEWWW_OPTIONS > /dev/null 2>&1 &
+    nohup $path/fakewww $FAKEWWW_OPTIONS > /dev/null 2>&1 &
     touch /var/lock/subsys/fakewww
 fi
 
@@ -53,6 +53,6 @@ if ! pgrep -f flashpolicyd.py &> /dev/null ; then
     # rotate log file before starting
     [ -f $flashpolicyd_log.1 ] && mv $flashpolicyd_log.1 $flashpolicyd_log.2
     [ -f $flashpolicyd_log   ] && mv $flashpolicyd_log $flashpolicyd_log.1
-    $SLICEHOME/flashpolicyd.py > /dev/null 2> $flashpolicyd_log &
+    nohup $SLICEHOME/flashpolicyd.py > /dev/null 2> $flashpolicyd_log &
     touch /var/lock/subsys/flashpolicyd.py
 fi
