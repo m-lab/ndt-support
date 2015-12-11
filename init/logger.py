@@ -9,14 +9,18 @@ import logging
 import logging.handlers
 
 
+SIZE_100_MB = 100000000
+
+
 if len(sys.argv) == 1:
   sys.stderr.write('Please provide filename for writing logs.')
   sys.exit(1)
 
-# Rotate the log file every 1 day ('d'), keeping at most 2 backups.
-# This means there can be three files: current, backup 1, backup 2.
-handler = logging.handlers.TimedRotatingFileHandler(
-    sys.argv[1], interval=1, when='d', backupCount=2, utc=True)
+# Rotate the log file when it contains SIZE_100_MB bytes, keeping at most 2
+# backups. This means there can be three files: current, backup 1, backup 2
+# whose total disk usage is 300 MB.
+handler = logging.handlers.RotatingFileHandler(
+    sys.argv[1], maxBytes=SIZE_100_MB, backupCount=2)
 
 # Default logger config does not prefix log messages with any extra information.
 log = logging.getLogger()
