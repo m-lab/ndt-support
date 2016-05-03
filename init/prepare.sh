@@ -44,7 +44,9 @@ pushd $SOURCE_DIR/ndt
     export LDFLAGS="-L$BUILD_DIR/build/lib"
     ./bootstrap
     ./configure --enable-fakewww --prefix=$BUILD_DIR/build
+    # Run unit tests on source before making and installing
     make
+    make check || (echo "Unit testing of the source code failed." && exit 1)
     make install
 
     # Applet gets remade if we do this before 'make install'
