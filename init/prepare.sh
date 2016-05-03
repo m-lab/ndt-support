@@ -44,6 +44,12 @@ pushd $SOURCE_DIR/ndt
     export LDFLAGS="-L$BUILD_DIR/build/lib"
     ./bootstrap
     ./configure --enable-fakewww --prefix=$BUILD_DIR/build
+    # Run unit tests on source before making and installing
+    make check
+    if [[ $? -ne 0 ]]; then
+        echo "Unit testing of the source code failed. Please contact the developers."
+        exit 1
+    fi
     make
     make install
 
