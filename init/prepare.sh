@@ -49,6 +49,11 @@ pushd $SOURCE_DIR/ndt
     # Run unit tests on source before making and installing
     make
     make install
+
+    # The Node.js WebSocket tests in "make check" require these modules
+    pushd
+        npm install ws minimist
+    popd
     make check || (echo "Unit testing of the source code failed." && exit 1)
 
     # Applet gets remade if we do this before 'make install'
