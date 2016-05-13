@@ -42,6 +42,7 @@ popd
 pushd $SOURCE_DIR/ndt
     export CPPFLAGS="-I$BUILD_DIR/build/include -I$BUILD_DIR/build/include/web100"
     export LDFLAGS="-L$BUILD_DIR/build/lib"
+    export LD_LIBRARY_PATH="$BUILD_DIR/build/lib"
     ./bootstrap
     ./configure --enable-fakewww --prefix=$BUILD_DIR/build
     # Run unit tests on source before making and installing
