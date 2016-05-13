@@ -42,12 +42,13 @@ popd
 pushd $SOURCE_DIR/ndt
     export CPPFLAGS="-I$BUILD_DIR/build/include -I$BUILD_DIR/build/include/web100"
     export LDFLAGS="-L$BUILD_DIR/build/lib"
+    export LD_LIBRARY_PATH="$BUILD_DIR/build/lib"
     ./bootstrap
     ./configure --enable-fakewww --prefix=$BUILD_DIR/build
     # Run unit tests on source before making and installing
     make
-    make check || (echo "Unit testing of the source code failed." && exit 1)
     make install
+    make check || (echo "Unit testing of the source code failed." && exit 1)
 
     # Applet gets remade if we do this before 'make install'
     # NOTE: call helper script for signing jar
