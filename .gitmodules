@@ -4,3 +4,6 @@
 [submodule "ndt"]
 	path = ndt 
 	url = https://github.com/m-lab/ndt
+[submodule "I2util"]
+	path = I2util
+	url = https://github.com/m-lab/I2util-archive
