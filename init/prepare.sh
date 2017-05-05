@@ -52,7 +52,7 @@ pushd $SOURCE_DIR/ndt
 
     # The Node.js WebSocket tests in "make check" require these modules
     pushd $SOURCE_DIR/ndt/src/node_tests
-        npm install ws minimist
+        npm install ws@1.1.4 minimist
     popd
     make check || (echo "Unit testing of the source code failed." && exit 1)
 
