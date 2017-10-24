@@ -38,7 +38,10 @@ if ! pgrep -f ndtd &> /dev/null ; then
     [ -f $logpath/web100srv.log.1 ] && mv $logpath/web100srv.log.1 $logpath/web100srv.log.2
     [ -f $logpath/web100srv.log   ] && mv $logpath/web100srv.log $logpath/web100srv.log.1
     # ndtd must run as root
-    nohup $path/ndtd $WEB100SRV_OPTIONS 2>&1 | $SLICEHOME/init/logger.py /var/log/web100srv.debug &
+    # Load the getnameinfo library to disable all rDNS requests.
+    LD_PRELOAD=$SLICEHOME/build/lib/getnameinfo.so \
+        nohup $path/ndtd $WEB100SRV_OPTIONS 2>&1 \
+            | $SLICEHOME/init/logger.py /var/log/web100srv.debug &
     touch /var/lock/subsys/ndtd
 fi
 

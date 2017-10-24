@@ -70,6 +70,12 @@ pushd $SOURCE_DIR/ndt
     done
 popd
 
+# NOTE: Build the getnameinfo LD_PRELOAD library.
+pushd $SOURCE_DIR/
+    gcc -shared -ldl -fPIC getnameinfo.c -o $BUILD_DIR/build/lib/getnameinfo.so
+popd
+
+
 cp -r $SOURCE_DIR/init             $BUILD_DIR/
 cp    $SOURCE_DIR/tcpbw100.html    $BUILD_DIR/
 cp    $SOURCE_DIR/flashpolicy.xml  $BUILD_DIR/
