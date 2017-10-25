@@ -1,0 +1,30 @@
+language: python
+python:
+- '2.7'
+
+services:
+- docker
+
+cache:
+  pip: true
+  directories:
+    - $HOME/google-cloud-sdk/
+
+script:
+  - pip install google-compute-engine
+  - $TRAVIS_BUILD_DIR/travis/install_gcloud.sh
+  - $TRAVIS_BUILD_DIR/build_rpm.sh "DISABLE_APPLET_SIGNING=1 ./package/slicebuild.sh iupui_ndt"
+
+deploy:
+ # Sandbox - unreviewed, untagged, deploy to gs://legacy-rpms-mlab-sandbox
+ - provider: script
+   script: $TRAVIS_BUILD_DIR/deploy_rpm.sh
+       "$SERVICE_ACCOUNT_mlab_sandbox"
+       $TRAVIS_BUILD_DIR/build/slicebase-i386/i686/iupui_ndt-*.rpm
+       gs://legacy-rpms-mlab-sandbox/slicebase-i386/i686/
+   on:
+     repo: m-lab/ndt-support
+     all_branches: true
+     condition: $TRAVIS_BRANCH == sandbox-* && $TRAVIS_EVENT_TYPE == push
+   skip_cleanup: true
+
