@@ -13,7 +13,7 @@ cache:
 script:
   - pip install google-compute-engine
   - $TRAVIS_BUILD_DIR/travis/install_gcloud.sh
-  - $TRAVIS_BUILD_DIR/build_rpm.sh
+  - $TRAVIS_BUILD_DIR/build_rpm.sh "cd /root/iupui_ndt; DISABLE_APPLET_SIGNING=1 ./package/slicebuild.sh iupui_ndt"
 
 deploy:
  # Sandbox - unreviewed, untagged, deploy to gs://legacy-rpms-mlab-sandbox
