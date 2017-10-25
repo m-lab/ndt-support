@@ -1,4 +1,8 @@
 #!/bin/bash
+#
+# TODO: And, future changes should generalize and move deploy_rpm.sh to the
+# travis repo so others can take advantage of gcs copy using service account
+# keys from environment variables.
 
 USAGE="$0 <base64-key> <source file> <dest gcs bucket>"
 KEY=${1:?Please provide the base64 encoded service account key: $USAGE}
