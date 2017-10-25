@@ -7,3 +7,6 @@
 [submodule "I2util"]
 	path = I2util
 	url = https://github.com/m-lab/I2util-archive
+[submodule "travis"]
+	path = travis
+	url = https://github.com/m-lab/travis.git
