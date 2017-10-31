@@ -80,12 +80,13 @@ pushd $SOURCE_DIR/
     mkdir -p $GOPATH
     # Get source and all dependencies, and do not build.
     go get -d github.com/m-lab/inotify-exporter/cmd/inotify_exporter
-    cd $GOPATH/go/src/github.com/m-lab/inotify-exporter
-    # Checkout a specific production tag.
-    git checkout -q tags/production/0.1
+    pushd go/src/github.com/m-lab/inotify-exporter
+      # Checkout a specific production tag.
+      git checkout -q tags/production/0.1
+    popd
     # Build that version.
     go install github.com/m-lab/inotify-exporter/cmd/inotify_exporter
-    cp go/src/inotify_exporter $BUILD_DIR/build/bin/
+    cp go/bin/inotify_exporter $BUILD_DIR/build/bin/
 popd
 
 
