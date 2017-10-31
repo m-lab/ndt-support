@@ -61,6 +61,7 @@ if ! pgrep -f flashpolicyd.py &> /dev/null ; then
 fi
 
 if ! pgrep -f inotify_exporter &> /dev/null ; then
+    echo "Starting inotify_exporter:"
     nohup $SLICEHOME/build/bin/inotify_exporter --path /var/spool/iupui_ndt &> /dev/null &
     touch /var/lock/subsys/inotify_exporter
 fi
