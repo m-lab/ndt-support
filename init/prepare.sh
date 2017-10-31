@@ -75,6 +75,19 @@ pushd $SOURCE_DIR/
     gcc -shared -ldl -fPIC getnameinfo.c -o $BUILD_DIR/build/lib/getnameinfo.so
 popd
 
+pushd $SOURCE_DIR/
+    export GOPATH=$PWD/go
+    mkdir -p $GOPATH
+    # Get source and all dependencies, and do not build.
+    go get -d github.com/m-lab/inotify-exporter/cmd/inotify_exporter
+    cd $GOPATH/go/src/github.com/m-lab/inotify-exporter
+    # Checkout a specific production tag.
+    git checkout -q tags/production/0.1
+    # Build that version.
+    go install github.com/m-lab/inotify-exporter/cmd/inotify_exporter
+    cp go/src/inotify_exporter $BUILD_DIR/build/bin/
+popd
+
 
 cp -r $SOURCE_DIR/init             $BUILD_DIR/
 cp    $SOURCE_DIR/tcpbw100.html    $BUILD_DIR/
