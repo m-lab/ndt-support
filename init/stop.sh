@@ -20,4 +20,10 @@ if pgrep -f flashpolicyd.py &> /dev/null ; then
     pkill -TERM -f flashpolicyd.py
     rm -f /var/lock/subsys/flashpolicyd.py
 fi
+
+if pgrep -f inotify_exporter &> /dev/null ; then
+    echo "Stopping inotify_exporter:"
+    pkill -TERM -f inotify_exporter
+    rm -f /var/lock/subsys/inotify_exporter
+fi
 EOF

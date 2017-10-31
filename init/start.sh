@@ -59,3 +59,8 @@ if ! pgrep -f flashpolicyd.py &> /dev/null ; then
     nohup $SLICEHOME/flashpolicyd.py > /dev/null 2> $flashpolicyd_log &
     touch /var/lock/subsys/flashpolicyd.py
 fi
+
+if ! pgrep -f inotify_exporter &> /dev/null ; then
+    nohup $SLICEHOME/build/bin/inotify_exporter --path /var/spool/iupui_ndt &> /dev/null &
+    touch /var/lock/subsys/inotify_exporter
+fi
