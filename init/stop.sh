@@ -3,27 +3,27 @@
 sudo -s <<\EOF
 source /etc/mlab/slice-functions
 
-if pgrep -f ndtd &> /dev/null ; then
+if test -f /var/lock/subsys/ndtd ; then
     echo "Stopping ndtd:"
-    pkill -KILL -f ndtd
+    kill -KILL `cat /var/lock/subsys/ndtd`
     rm -f /var/lock/subsys/ndtd
 fi
 
-if pgrep -f fakewww &> /dev/null ; then
+if test -f /var/lock/subsys/fakewww ; then
     echo "Stopping fakewww:"
-    pkill -TERM -f fakewww
+    kill -TERM `cat /var/lock/subsys/fakewww`
     rm -f /var/lock/subsys/fakewww
 fi
 
-if pgrep -f flashpolicyd.py &> /dev/null ; then
+if test -f /var/lock/subsys/flashpolicyd.py ; then
     echo "Stopping flashpolicyd.py:"
-    pkill -TERM -f flashpolicyd.py
+    kill -TERM `cat /var/lock/subsys/flashpolicyd.py`
     rm -f /var/lock/subsys/flashpolicyd.py
 fi
 
-if pgrep -f inotify_exporter &> /dev/null ; then
+if test -f /var/lock/subsys/inotify_exporter ; then
     echo "Stopping inotify_exporter:"
-    pkill -TERM -f inotify_exporter
+    kill -TERM `cat /var/lock/subsys/inotify_exporter`
     rm -f /var/lock/subsys/inotify_exporter
 fi
 EOF
