@@ -28,3 +28,15 @@ deploy:
      condition: $TRAVIS_BRANCH == sandbox-* && $TRAVIS_EVENT_TYPE == push
    skip_cleanup: true
 
+ # STAGING - reviewed, untagged, deploy to gs://legacy-rpms-mlab-staging
+ - provider: script
+   script: $TRAVIS_BUILD_DIR/deploy_rpm.sh
+       "$SERVICE_ACCOUNT_mlab_staging"
+       $TRAVIS_BUILD_DIR/build/slicebase-i386/i686/iupui_ndt-*.rpm
+       gs://legacy-rpms-mlab-staging/slicebase-i386/i686/
+   on:
+     repo: m-lab/ndt-support
+     all_branches: true
+     condition: $TRAVIS_BRANCH == master && $TRAVIS_EVENT_TYPE == push
+   skip_cleanup: true
+
