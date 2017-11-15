@@ -42,6 +42,7 @@ if ! pgrep -f ndtd &> /dev/null ; then
     LD_PRELOAD=$SLICEHOME/build/lib/getnameinfo.so \
         nohup $path/ndtd $WEB100SRV_OPTIONS 2>&1 \
             | $SLICEHOME/init/logger.py /var/log/web100srv.debug &
+    sleep .5
     pgrep -f ndtd > /var/lock/subsys/ndtd
 else
     echo "Already running: ndtd"
@@ -50,6 +51,7 @@ fi
 if ! pgrep -f fakewww &> /dev/null ; then
     echo "Starting fakewww:"
     nohup $path/fakewww $FAKEWWW_OPTIONS > /dev/null 2>&1 &
+    sleep .5
     pgrep -f fakewww > /var/lock/subsys/fakewww
 else
     echo "Already running: fakewww"
@@ -61,6 +63,7 @@ if ! pgrep -f flashpolicyd.py &> /dev/null ; then
     [ -f $flashpolicyd_log.1 ] && mv $flashpolicyd_log.1 $flashpolicyd_log.2
     [ -f $flashpolicyd_log   ] && mv $flashpolicyd_log $flashpolicyd_log.1
     nohup $SLICEHOME/flashpolicyd.py > /dev/null 2> $flashpolicyd_log &
+    sleep .5
     pgrep -f flashpolicyd.py > /var/lock/subsys/flashpolicyd.py
 else
     echo "Already running: flashpolicyd.py"
@@ -69,6 +72,7 @@ fi
 if ! pgrep -f inotify_exporter &> /dev/null ; then
     echo "Starting inotify_exporter:"
     nohup $SLICEHOME/build/bin/inotify_exporter --path /var/spool/iupui_ndt &> /dev/null &
+    sleep .5
     pgrep -f inotify_exporter > /var/lock/subsys/inotify_exporter
 else
     echo "Already running: inotify_exporter"
