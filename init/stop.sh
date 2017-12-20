@@ -5,6 +5,10 @@ source /etc/mlab/slice-functions
 
 if test -f /var/lock/subsys/ndtd ; then
     echo "Stopping ndtd:"
+    # Note the minus sign (`-`) before the `cat` command substitution below.
+    # This is a special syntax for `kill`, telling it to not just kill the PID,
+    # but to kill every process in the PID's process group. This will
+    # effectively kill the parent ndtd process, along with any children.
     kill -KILL -$(cat /var/lock/subsys/ndtd)
     rm -f /var/lock/subsys/ndtd
 fi
