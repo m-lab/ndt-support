@@ -7,8 +7,6 @@ services:
 
 cache:
   pip: true
-  directories:
-    - $HOME/google-cloud-sdk/
 
 script:
   - pip install google-compute-engine
