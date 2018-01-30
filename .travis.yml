@@ -19,7 +19,7 @@ deploy:
  - provider: script
    script: >
      $TRAVIS_BUILD_DIR/travis/deploy_gcs.sh
-     "$SERVICE_ACCOUNT_mlab_sandbox"
+     SERVICE_ACCOUNT_mlab_sandbox
      $TRAVIS_BUILD_DIR/build/slicebase-i386/i686/iupui_ndt-*.rpm
      gs://legacy-rpms-mlab-sandbox/slicebase-i386/i686/
    on:
@@ -32,7 +32,7 @@ deploy:
  - provider: script
    script: >
      $TRAVIS_BUILD_DIR/travis/deploy_gcs.sh
-     "$SERVICE_ACCOUNT_mlab_staging"
+     SERVICE_ACCOUNT_mlab_staging
      $TRAVIS_BUILD_DIR/build/slicebase-i386/i686/iupui_ndt-*.rpm
      gs://legacy-rpms-mlab-staging/slicebase-i386/i686/
    on:
