@@ -52,6 +52,9 @@ pushd $SOURCE_DIR/ndt
 
     # The Node.js WebSocket tests in "make check" require these modules
     pushd $SOURCE_DIR/ndt/src/node_tests
+        # Note: npm has a known issue with validating SSL certs. This disables
+        # strict ssl checks when installing the following package.
+        npm config set strict-ssl false
         npm install ws@1.1.4 minimist
     popd
     make check || (echo "Unit testing of the source code failed." && exit 1)
